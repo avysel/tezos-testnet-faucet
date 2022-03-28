@@ -1,8 +1,12 @@
-# Tezos scratch DApp
+# Tezos testnet faucet
 
 ## Presentation
 
-Tezos sample DApp 
+One-click faucet for Tezos testnets.
+
+Currently supported:
+- Hangzhounet
+- Ithacanet
 
 ## URL
 
@@ -10,19 +14,20 @@ Deployed on https://tezos-testnet-faucet.netlify.app.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/ae801f5a-b160-44fb-9a2c-b017977a237a/deploy-status)](https://app.netlify.com/sites/tezos-testnet-faucet/deploys)
 
-## Made with
+## Deep inside
 
+### Made with
 
 ![React.js](assets/react-logo.png) | ![Parcel.js](assets/parcel-logo.png) | ![Typescript](assets/typescript-logo.png) | ![Taquito](assets/taquito-logo.png) | ![Beacon wallet](assets/beaconwallet-logo.png) | ![React Bootstrap](assets/react-bootstrap-logo.png)
 ---|---|---|---|---|---
 React | Parcel | Typescript | Taquito | Beacon wallet | React Bootstrap
 
-## Use
+### Use
 
 Download
 ```
-git clone git@github.com:avysel/tezos-scratch-dapp.git
-cd tezos-scratch-dapp
+git clone git@github.com:avysel/tezos-testnet-faucet.git
+cd tezos-testnet-faucet
 ```
 
 Install
@@ -48,7 +53,3 @@ Deploy on Github Pages
 ```
 npm run deploy
 ```
-
-## References
-
-https://hackernoon.com/how-to-deploy-a-react-app-to-github-pages
