@@ -1,15 +1,16 @@
 import { Dispatch, SetStateAction, useState } from "react";
 import { Row, Col, Container } from 'react-bootstrap';
-import config from './config/config.json';
-import Supply from "./components/Supply";
-import './App.css';
 import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
+import config from './config/config.json';
+import './App.css';
+import AppLogo from "../public/faucet-logo.png";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Supply from "./components/Supply";
 import SplittedFaucet from "./components/Faucet/SplittedFaucet";
 import SplittedWallet from "./components/Wallet/SplittedWallet";
-import Header from "./components/Header";
-import AppLogo from '../public/faucet-logo.png';
-import Footer from "./components/Footer";
+
 
 type UserContext = {
   userAddress: string;
@@ -71,7 +72,7 @@ function App() {
     setTezos: setHanghzounetTezos
   }
 
-  const contextList2: TestnetContext[] = [hangzhounetContext, ithacanetContext];
+  const contextList: TestnetContext[] = [hangzhounetContext, ithacanetContext];
 
 
   return (
@@ -85,7 +86,7 @@ function App() {
             <img src={AppLogo} />
           </Col>
           <Col md={8}>
-            <SplittedWallet user={hangzhounetUser} defaultNetwork={config.networks.hangzhounet} tezos={hangzhounetContext} contexts={contextList2} />
+            <SplittedWallet user={ithacanetUser} defaultNetwork={config.networks.ithacanet} tezos={ithacanetContext} testnetContexts={contextList} />
           </Col>
         </Row>
 

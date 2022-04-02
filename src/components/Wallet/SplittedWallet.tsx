@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { displayBalance, getNetworkType } from "../../lib/Utils";
 
-function SplittedWallet({ user, tezos, defaultNetwork, contexts }: { user: any, tezos: any, defaultNetwork: any, contexts: any[] }) {
+function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user: any, tezos: any, defaultNetwork: any, testnetContexts: any[] }) {
 
     const [balanceList, setBalanceList] = useState<any>();
 
@@ -17,7 +17,7 @@ function SplittedWallet({ user, tezos, defaultNetwork, contexts }: { user: any, 
 
         user.setUserAddress(userAddress);
 
-        contexts.map(async (context) => {
+        testnetContexts.map(async (context) => {
             context.setUserAddress(userAddress);
             const balance = await context.Tezos.tz.getBalance(userAddress);
             context.setUserBalance(balance.toNumber());
@@ -43,9 +43,9 @@ function SplittedWallet({ user, tezos, defaultNetwork, contexts }: { user: any, 
     /**
      * Update balance display from context data
      */
-     const updateBalances = (): void => {
+    const updateBalances = (): void => {
 
-        let bl = contexts.map((context) =>
+        let bl = testnetContexts.map((context) =>
             <Col>
                 <b>{context.network.name} balance: </b>
                 {displayBalance(context.userBalance)} ꜩ
@@ -59,7 +59,7 @@ function SplittedWallet({ user, tezos, defaultNetwork, contexts }: { user: any, 
         () => {
             updateBalances();
         },
-        [contexts.map(context => context.userBalance)],
+        [testnetContexts.map(context => context.userBalance)],
     );
 
     useEffect(() => {
@@ -97,7 +97,7 @@ function SplittedWallet({ user, tezos, defaultNetwork, contexts }: { user: any, 
         //tezos.setWallet(null);
         const tezosTK = new TezosToolkit(defaultNetwork.rpcUrl);
         tezos.setTezos(tezosTK);
-        console.log("disconnecting wallet");
+        //console.log("disconnecting wallet");
         if (tezos.wallet) {
             await tezos.wallet.clearActiveAccount();
             /*await tezos.wallet.client.removeAllAccounts();

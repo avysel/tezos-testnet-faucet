@@ -15,16 +15,16 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
           if(userBalance.toNumber() > 5000000){
               throw new Error("User has already enough ꜩ");
           }*/
-        return { ok: true, msg: "ok"};
+        return { ok: true, msg: "ok" };
     }
 
     const sendTransaction = () => {
         status.setLoading(true);
         setLocalLoading(true);
-        status.setStatus("");
-        status.setStatusType("");
+        status.setStatus(null);
+        status.setStatusType(null);
 
-        const canSend: { ok: boolean, msg: string }  = checkCanSend();
+        const canSend: { ok: boolean, msg: string } = checkCanSend();
         if (!canSend.ok) {
             status.setStatus(`${canSend.msg}`);
             status.setStatusType("danger");
@@ -43,32 +43,37 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
             obj.activation_code
         );
 
-        // Create and send transaction
-        Tezos.contract.transfer({ to: user.userAddress, amount: 1 })
-            .then((operation) => {
-                //console.log("op: " + operation.hash);
-                const viewerUrl = `${network.viewer}/${operation.hash}`;
-                status.setStatusType("primary");
-                status.setStatus(`Your ꜩ is on the way! <a target="_blank" href="${viewerUrl}" class="alert-link">Check it.</a>`);
+        try {
+            // Create and send transaction
+            Tezos.contract.transfer({ to: user.userAddress, amount: 1 })
+                .then((operation) => {
+                    //console.log("op: " + operation.hash);
+                    const viewerUrl = `${network.viewer}/${operation.hash}`;
+                    status.setStatusType("primary");
+                    status.setStatus(`Your ꜩ is on the way! <a target="_blank" href="${viewerUrl}" class="alert-link">Check it.</a>`);
 
-                // Wait for 1 confirmation to continue
-                return operation.confirmation(1).then(() => operation.hash);
-            })
-            .then((hash) => {
-                //console.log("hash: " + hash);
-                const viewerUrl = `${network.viewer}/${hash}`;
-                status.setStatus(`Your ꜩ should be arrived in your wallet! <a target="_blank" href="${viewerUrl}" class="alert-link">Check it.</a>`);
-                status.setStatusType("success");
-                status.setLoading(false);
-                setLocalLoading(false);
-            })
-            .catch((error) => {
-                console.log(`${error}`);
-                status.setStatus(`${errorMapping(error.name)}`);
-                status.setStatusType("danger");
-                status.setLoading(false);
-                setLocalLoading(false);
-            })
+                    // Wait for 1 confirmation to continue
+                    return operation.confirmation(1).then(() => operation.hash);
+                })
+                .then((hash) => {
+                    //console.log("hash: " + hash);
+                    const viewerUrl = `${network.viewer}/${hash}`;
+                    status.setStatus(`Your ꜩ should be arrived in your wallet! <a target="_blank" href="${viewerUrl}" class="alert-link">Check it.</a>`);
+                    status.setStatusType("success");
+                    status.setLoading(false);
+                    setLocalLoading(false);
+                })
+                .catch((error) => {
+                    //console.log(`${error}`);
+                    status.setStatus(error.description || errorMapping(error.name));
+                    status.setStatusType("danger");
+                    status.setLoading(false);
+                    setLocalLoading(false);
+                })
+        }
+        catch (err) {
+
+        }
     };
 
     return (
@@ -77,7 +82,7 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
                 variant="primary"
                 disabled={status.isLoading}
                 onClick={sendTransaction}>
-                    <DropletFill />&nbsp;
+                <DropletFill />&nbsp;
                 {isLocalLoading ? `Sending 1 ꜩ to ${minifyTezosAddress(user.userAddress)}...` : `Request 1 ꜩ`}
             </Button>
             {isLocalLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : ""}

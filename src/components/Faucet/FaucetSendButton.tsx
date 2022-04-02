@@ -9,8 +9,10 @@ function FaucetSendButton({ user, network, Tezos, status }: { user: any, network
     const [isLocalLoading, setLocalLoading] = useState<boolean>(false);
 
     const send = async (): Promise<void> => {
+        status.setStatusType(null);
         status.setLoading(true);
         setLocalLoading(true);
+        status.setStatus(null);
 
         const op = await Tezos.wallet.transfer({ to: network.faucetAddress, amount: 1 }).send()
             .then((operation) => {
@@ -28,8 +30,8 @@ function FaucetSendButton({ user, network, Tezos, status }: { user: any, network
                 setLocalLoading(false);
             })
             .catch((error) => {
-                console.log(`${error}`);
-                status.setStatus(`${errorMapping(error.name)}`);
+                //console.log(error);
+                status.setStatus(error.description || errorMapping(error.name));
                 status.setStatusType("danger");
                 status.setLoading(false);
                 setLocalLoading(false);

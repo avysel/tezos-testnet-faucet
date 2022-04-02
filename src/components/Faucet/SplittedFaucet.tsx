@@ -23,8 +23,9 @@ function SplittedFaucet({ network, user, Tezos }: { network: any, user: any, Tez
     const [isLoading, setLoading] = useState<boolean>(false);
     const [status, setStatus] = useState<string>("");
     const [statusType, setStatusType] = useState<string>("");
+    const [showAlert, setShowAlert] = useState(false);
 
-    const statusContext = { isLoading, statusType, status, setLoading, setStatusType, setStatus };
+    const statusContext: StatusContext = { isLoading, statusType, status, setLoading, setStatusType, setStatus };
 
     const readBalances = async (): Promise<void> => {
         try {
@@ -41,6 +42,11 @@ function SplittedFaucet({ network, user, Tezos }: { network: any, user: any, Tez
         readBalances();
     }, [isLoading]);
 
+    useEffect(() => {
+        if(statusType && statusType !== "")
+            setShowAlert(true);
+    }, [statusType]);
+
     return (
         <Card>
             <Card.Header>{network.name} faucet</Card.Header>
@@ -54,9 +60,11 @@ function SplittedFaucet({ network, user, Tezos }: { network: any, user: any, Tez
                 }
                 <br />
                 <br />
-                <Alert variant={statusType}>
-                    {Parser(status)}
-                </Alert>
+                {showAlert && status &&
+                    <Alert variant={statusType} onClose={() => setShowAlert(false)} dismissible>
+                        {Parser(status)}
+                    </Alert>
+                }
             </Card.Body>
         </Card>
     )

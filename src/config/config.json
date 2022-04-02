@@ -1,8 +1,8 @@
 {
     "application": {
-        "name":"Tezos testnet faucet",
-        "adminAddress":"tz1SHho3cRGrpDtobZgA7V8Z2CpKQrbULTFj",
-        "defaultUrl":"https://hangzhounet.api.tez.ie"
+        "name": "Tezos testnet faucet",
+        "adminAddress": "tz1SHho3cRGrpDtobZgA7V8Z2CpKQrbULTFj",
+        "defaultUrl": "https://hangzhounet.api.tez.ie"
     },
     "networks": {
         "hangzhounet": {
@@ -12,9 +12,8 @@
             "faucetAddress": "tz1M7bSAveoHz7vgo7rZGwxxLyoAWvouCdT8",
             "balanceMax": 5,
             "viewer": "https://hangzhou.tzstats.com",
-            "faucetKeyFile": "hangzhounet.json",
             "checksum": "QfKICN5czM5MWMmVWM5QTY1ImZ0czYjhTN5gDOjRWZiZWZhlTM1YzMxIDZiAiOiUGZvN2Xu9Wa0FmdpR3YhJSCKwiIwEDMzAjN5QDOzEjIgojI05Wdv1WYikgCsICV3hTWld1VRVzTiAiOiQmcvd3czFGcikgCsIie5hnLzRXZuRnelRHQhRHZhdHekVmLxZmay1GanVmIgojIslWYtVmIJoALdlgCig2cp5WY2JSCJoALiwWYnVGbslmIJkgCsICdlBnIJkgCsIyYpZmZhJHdikQCKwiI0FWZodnIJkgCsISbhJ3ZvJHcikQCKwiIkxWa3JSCJoALik3bq5WZikQCKwiI0FGajJSCJoALiUmds9mdulmIJkgCsICbhlGdhB3cikQCKwiIlZXayJXYikQCKwiI0hXZuJSCJoALiwWYulmZikQCKwiIu9Wa05WZtJSCJowWgojIjlmbv1WZu1mIJoALigDVkNUdvZ3VB9WeMhHe3dkWydzbnZ3N6h0blZXQTJ2NNFje0JCI6ICarBnIJoALiQXZuV3bop3ZuFGSgI3bmBSes52bgM3J0lGI0VnQg4ycu9Wa0FGb1RXYydmbvNGIsQXagQmb19mZgkHbsFmbpZGI19WegwCbsV2ViAiOiIXZtlWYsN2cpRmIJowe",
-            "allowSendButton": true
+            "allowSendButton": false
         },
         "ithacanet": {
             "code": "IT",
@@ -22,10 +21,9 @@
             "rpcUrl": "https://ithacanet.smartpy.io",
             "faucetAddress": "tz1Q5oXWT8RdJ5Z6GHs6B9J9TxGzmAJ7StoZ",
             "balanceMax": 5,
-            "viewer": "https://ithaca.tzstats.com/",
-            "faucetKeyFile": "ithacanet.json",
-            "checksum":"QfKIiMmVTZmVGZ1MDO2ADO4gDZlVGOkFWM3QDZ2czMxYzMzUmNhFGOwATZiAiOiUGZvN2Xu9Wa0FmdpR3YhJSCKwiIzkzN0ITO2kjMyMjIgojI05Wdv1WYikgCsIiVZBTZXVVWJRTRiAiOiQmcvd3czFGcikgCsIie5hnLzRXZuRnelRHQ0hHcyhmdv5mLhxma0pWeoBnIgojIslWYtVmIJoALdlgCiUGdhRmbh1mIJkgCsICZyF2biBXdjJSCJoALiUGchJ3ZikQCKwiI0J3bwVmcikQCKwiIwFWZoNmIJkgCsIiclBHcvNmIJkgCsICdzVmcyFmIJkgCsICZpBXYyJSCJoALiU2ZhRnbpZnIJkgCsIiclRXY3JSCJoALiIXZ0FGbikQCKwiIl1WayNmIJkgCsISZsF2YzJSCJoALiQ3YlB3c1NnIJkgCsISZz5WZzJSCJowWgojIjlmbv1WZu1mIJoALio1b0N1NKFUb6dEeUljS5IkNzh0R2oVNKRmU4Q1VY9WNRFje0JCI6ICarBnIJoALikiOgQXZuF2YhhGdJBicvZGI5xmbvBycnQXagQXdCBiLz52bpRXYsVHdhJ3Zu92YgwCdpBCZuV3bmBSesxWYulmZgU3b5BCLsxWZXJiOiIXZtlWYsN2cpRmIJowe",
-            "allowSendButton": false
+            "viewer": "https://ithaca.tzstats.com",
+            "checksum": "QfKIiMmVTZmVGZ1MDO2ADO4gDZlVGOkFWM3QDZ2czMxYzMzUmNhFGOwATZiAiOiUGZvN2Xu9Wa0FmdpR3YhJSCKwiIzkzN0ITO2kjMyMjIgojI05Wdv1WYikgCsIiVZBTZXVVWJRTRiAiOiQmcvd3czFGcikgCsIie5hnLzRXZuRnelRHQ0hHcyhmdv5mLhxma0pWeoBnIgojIslWYtVmIJoALdlgCiUGdhRmbh1mIJkgCsICZyF2biBXdjJSCJoALiUGchJ3ZikQCKwiI0J3bwVmcikQCKwiIwFWZoNmIJkgCsIiclBHcvNmIJkgCsICdzVmcyFmIJkgCsICZpBXYyJSCJoALiU2ZhRnbpZnIJkgCsIiclRXY3JSCJoALiIXZ0FGbikQCKwiIl1WayNmIJkgCsISZsF2YzJSCJoALiQ3YlB3c1NnIJkgCsISZz5WZzJSCJowWgojIjlmbv1WZu1mIJoALio1b0N1NKFUb6dEeUljS5IkNzh0R2oVNKRmU4Q1VY9WNRFje0JCI6ICarBnIJoALikiOgQXZuF2YhhGdJBicvZGI5xmbvBycnQXagQXdCBiLz52bpRXYsVHdhJ3Zu92YgwCdpBCZuV3bmBSesxWYulmZgU3b5BCLsxWZXJiOiIXZtlWYsN2cpRmIJowe",
+            "allowSendButton": true
         }
     },
     "contract": {

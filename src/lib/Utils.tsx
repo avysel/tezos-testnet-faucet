@@ -13,7 +13,7 @@ function splitNumber(x: number) {
   }
 
 function roundBalance(balance: number): number {
-    return Math.round(balance / 10000) / 100;
+    return Math.trunc(balance / 10000) / 100;
 }
 
 function displayBalance(balance: number): string {
