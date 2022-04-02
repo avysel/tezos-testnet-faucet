@@ -35,7 +35,7 @@ function About() {
                         <h3>Bug, problem or comments ?</h3>
                         <div>
                             <p>
-                                Feel free to create an issue on the <a href="https://github.com/avysel/tezos-testnet-faucet/issues" target="_blank">Github projet repository</a>.
+                                Feel free to create an issue on the <a href="https://github.com/avysel/tezos-testnet-faucet/issues" target="_blank">Github project repository</a>.
                             </p>
                         </div>
 
