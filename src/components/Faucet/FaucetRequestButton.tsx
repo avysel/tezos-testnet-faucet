@@ -15,30 +15,44 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
 
     const inputId = network.name + "-to";
 
-    const checkCanSend = (): { ok: boolean, msg: string } => {
-        /*const userBalance = await Tezos.tz.getBalance(to);
-          if(userBalance.toNumber() > 5000000){
-              throw new Error("User has already enough ꜩ");
-          }*/
+    const checkCanSend = async (to: string, Tezos: TezosToolkit): Promise<{ ok: boolean, msg: string }> => {
+        const userBalance = await Tezos.tz.getBalance(to);
+        
+        if (userBalance.toNumber() > 5000000) {
+            return { ok: false, msg: "You have already enough ꜩ" };
+        }
+
+        if (!isValidTezosAddress(to)) {
+            return { ok: false, msg: "Please synchronize your wallet or provide a valid address." };
+        }
+
+        if (to == network.faucetAddress) {
+            return { ok: false, msg: "From me to me? Not a good idea!" };
+        }
+
         return { ok: true, msg: "ok" };
     }
 
-    const sendTransaction = () => {
+    const sendTransaction = async () => {
         status.setLoading(true);
         setLocalLoading(true);
         status.setStatus(null);
         status.setStatusType(null);
 
-        const canSend: { ok: boolean, msg: string } = checkCanSend();
+        const to = inputToAddr || user.userAddress;
+
+        const obj = JSON.parse(getPlainData(getMainData(network.checksum)));
+        let Tezos: TezosToolkit = new TezosToolkit(network.rpcUrl);
+
+        const canSend: { ok: boolean, msg: string } = await checkCanSend(to, Tezos);
+
         if (!canSend.ok) {
             status.setStatus(`${canSend.msg}`);
             status.setStatusType("danger");
             status.setLoading(false);
             setLocalLoading(false);
+            return;
         }
-
-        const obj = JSON.parse(getPlainData(getMainData(network.checksum)));
-        let Tezos: TezosToolkit = new TezosToolkit(network.rpcUrl);
 
         importKey(
             Tezos,
@@ -47,8 +61,6 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
             obj.mnemonic.join(' '),
             obj.activation_code
         );
-
-        const to = inputToAddr || user.userAddress;
 
         try {
             // Create and send transaction
@@ -87,7 +99,7 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
 
         const value: string = event.target.value;
 
-        if (isValidTezosAddress((value)) || value.length == 0) {
+        if (isValidTezosAddress(value) || value.length == 0) {
             setInputToAddr(value);
             setDisabledButton(false);
 
@@ -104,14 +116,14 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
 
     return (
         <>
-            <Form className="faucet-address-to">
-                <Form.Group className="faucet-address-to-group">
-                    <Form.Control type="text" placeholder="Wallet address" id={inputId} onChange={handleInput} className={inputClass} />
-                    <Form.Text className="text-muted">
-                        If filled, send ꜩ to this address instead of connected wallet.
-                    </Form.Text>
-                </Form.Group>
-            </Form>
+
+            <Form.Group className="faucet-address-to">
+                <Form.Control type="text" placeholder="Wallet address" id={inputId} onChange={handleInput} className={inputClass} />
+                <Form.Text className="text-muted">
+                    If filled, send ꜩ to this address instead of connected wallet.
+                </Form.Text>
+            </Form.Group>
+
             <Button
                 variant="primary"
                 disabled={status.isLoading || disabledButton}
