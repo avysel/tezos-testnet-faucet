@@ -47,4 +47,9 @@ function getPlainData(data: string): string {
     return decodeURIComponent(str);
 }
 
-export { minifyTezosAddress, roundBalance, getNetworkType, getMainData, getPlainData, displayBalance };
+function isValidTezosAddress(address: string): boolean {
+    let regexp: RegExp = /^(tz1|KT1)([a-zA-Z0-9]){33}$/;
+    return regexp.test(address);
+}
+
+export { minifyTezosAddress, roundBalance, getNetworkType, getMainData, getPlainData, displayBalance, isValidTezosAddress };

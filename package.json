@@ -8,6 +8,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel",
+    "watch": "parcel watch",
     "build": "parcel build",
     "build-gh": "parcel build --public-url .",
     "predeploy": "npm run build-gh",
