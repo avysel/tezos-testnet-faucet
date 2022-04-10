@@ -16,20 +16,27 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
     const inputId = network.name + "-to";
 
     const checkCanSend = async (to: string, Tezos: TezosToolkit): Promise<{ ok: boolean, msg: string }> => {
-        const userBalance = await Tezos.tz.getBalance(to);
-        
-        if (userBalance.toNumber() > 5000000) {
-            return { ok: false, msg: "You have already enough ꜩ" };
-        }
+        try {
 
-        if (!isValidTezosAddress(to)) {
+            const userBalance = await Tezos.tz.getBalance(to);
+
+            if (userBalance.toNumber() > 5000000) {
+                return { ok: false, msg: "You have already enough ꜩ" };
+            }
+
+            if (!isValidTezosAddress(to)) {
+                console.log(`${to} is not valid`)
+                return { ok: false, msg: "Please synchronize your wallet or provide a valid address." };
+            }
+
+            if (to == network.faucetAddress) {
+                return { ok: false, msg: "From me to me? Not a good idea!" };
+            }
+        }
+        catch (error) {
+            console.log(`error: ${error}`);
             return { ok: false, msg: "Please synchronize your wallet or provide a valid address." };
         }
-
-        if (to == network.faucetAddress) {
-            return { ok: false, msg: "From me to me? Not a good idea!" };
-        }
-
         return { ok: true, msg: "ok" };
     }
 
@@ -126,8 +133,9 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
 
             <Button
                 variant="primary"
-                disabled={status.isLoading || disabledButton}
-                onClick={sendTransaction}>
+                disabled={(status.isLoading || disabledButton) && (inputToAddr || user.userAddress)}
+                onClick={sendTransaction}
+            >
                 <DropletFill />&nbsp;
                 {isLocalLoading ? `Sending 1 ꜩ to ${minifyTezosAddress(inputToAddr || user.userAddress)}` : `Request 1 ꜩ`}
             </Button>

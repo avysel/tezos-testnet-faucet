@@ -48,7 +48,7 @@ function getPlainData(data: string): string {
 }
 
 function isValidTezosAddress(address: string): boolean {
-    let regexp: RegExp = /^(tz1|KT1)([a-zA-Z0-9]){33}$/;
+    let regexp: RegExp = /^(tz1|tz2|KT1)([a-zA-Z0-9]){33}$/;
     return regexp.test(address);
 }
 
