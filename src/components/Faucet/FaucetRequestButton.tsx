@@ -20,6 +20,10 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
 
             const userBalance = await Tezos.tz.getBalance(to);
 
+            if (to == network.faucetAddress) {
+                return { ok: false, msg: "From me to me? Not a good idea!" };
+            }
+
             if (userBalance.toNumber() > 5000000) {
                 return { ok: false, msg: "You have already enough ꜩ" };
             }
@@ -27,10 +31,6 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
             if (!isValidTezosAddress(to)) {
                 console.log(`${to} is not valid`)
                 return { ok: false, msg: "Please synchronize your wallet or provide a valid address." };
-            }
-
-            if (to == network.faucetAddress) {
-                return { ok: false, msg: "From me to me? Not a good idea!" };
             }
         }
         catch (error) {
@@ -133,7 +133,7 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
 
             <Button
                 variant="primary"
-                disabled={(status.isLoading || disabledButton) && (inputToAddr || user.userAddress)}
+                disabled={status.isLoading || disabledButton || (!inputToAddr && !user.userAddress)}
                 onClick={sendTransaction}
             >
                 <DropletFill />&nbsp;
