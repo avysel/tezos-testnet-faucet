@@ -5,7 +5,6 @@ import FaucetRequestButton from "./FaucetRequestButton";
 
 function FaucetToInputRequest({ network, status }: { network: any, status: any }) {
 
-    //const [isLocalLoading, setLocalLoading] = useState<boolean>(false);
     const [inputToAddr, setInputToAddr] = useState<string>("");
     const [disabledButton, setDisabledButton] = useState<boolean>(false);
     const [inputClass, setInputClass] = useState<string>("");

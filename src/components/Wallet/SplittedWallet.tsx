@@ -5,7 +5,6 @@ import config from '../../config/config.json';
 import { useEffect } from "react";
 import { Button, Card} from "react-bootstrap";
 import { getNetworkType } from "../../lib/Utils";
-import { PersonFill } from "react-bootstrap-icons";
 import UserInfo from "../Faucet/UserInfo";
 
 function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user: any, tezos: any, defaultNetwork: any, testnetContexts: any[] }) {
@@ -72,15 +71,10 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
     const disconnectWallet = async (): Promise<void> => {
         user.setUserAddress("");
         user.setUserBalance(0);
-        //tezos.setWallet(null);
         const tezosTK = new TezosToolkit(defaultNetwork.rpcUrl);
         tezos.setTezos(tezosTK);
-        //console.log("disconnecting wallet");
         if (tezos.wallet) {
             await tezos.wallet.clearActiveAccount();
-            /*await tezos.wallet.client.removeAllAccounts();
-            await tezos.wallet.client.removeAllPeers();
-            await tezos.wallet.client.destroy();*/
         }
         location.reload();
     };
