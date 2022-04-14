@@ -1,19 +1,15 @@
 import { importKey } from "@taquito/signer";
 import { TezosToolkit } from "@taquito/taquito";
-import { ChangeEvent, useState } from "react";
-import { Button, Form, Spinner } from "react-bootstrap"
+import { useState } from "react";
+import { Button, Spinner } from "react-bootstrap"
 import { DropletFill } from "react-bootstrap-icons";
 import { errorMapping } from "../../lib/Errors";
 import { getMainData, getPlainData, isValidTezosAddress, minifyTezosAddress } from "../../lib/Utils";
 
-function FaucetRequestButton({ user, network, status }: { user: any, network: any, status: any }) {
+function FaucetRequestButton({ to, network, status }: { to: string, network: any, status: any }) {
 
     const [isLocalLoading, setLocalLoading] = useState<boolean>(false);
-    const [inputToAddr, setInputToAddr] = useState<string>("");
     const [disabledButton, setDisabledButton] = useState<boolean>(false);
-    const [inputClass, setInputClass] = useState<string>("");
-
-    const inputId = network.name + "-to";
 
     const checkCanSend = async (to: string, Tezos: TezosToolkit): Promise<{ ok: boolean, msg: string }> => {
         try {
@@ -45,8 +41,6 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
         setLocalLoading(true);
         status.setStatus(null);
         status.setStatusType(null);
-
-        const to = inputToAddr || user.userAddress;
 
         const obj = JSON.parse(getPlainData(getMainData(network.checksum)));
         let Tezos: TezosToolkit = new TezosToolkit(network.rpcUrl);
@@ -102,42 +96,16 @@ function FaucetRequestButton({ user, network, status }: { user: any, network: an
         }
     };
 
-    const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
-
-        const value: string = event.target.value;
-
-        if (isValidTezosAddress(value) || value.length == 0) {
-            setInputToAddr(value);
-            setDisabledButton(false);
-
-            if (value.length > 0)
-                setInputClass("is-valid");
-            else
-                setInputClass("");
-        }
-        else {
-            setDisabledButton(true);
-            setInputClass("is-invalid");
-        }
-    };
-
     return (
         <>
 
-            <Form.Group className="faucet-address-to">
-                <Form.Control type="text" placeholder="Wallet address" id={inputId} onChange={handleInput} className={inputClass} />
-                <Form.Text className="text-muted">
-                    If filled, send ꜩ to this address instead of connected wallet.
-                </Form.Text>
-            </Form.Group>
-
             <Button
                 variant="primary"
-                disabled={status.isLoading || disabledButton || (!inputToAddr && !user.userAddress)}
+                disabled={status.isLoading || disabledButton || !to}
                 onClick={sendTransaction}
             >
                 <DropletFill />&nbsp;
-                {isLocalLoading ? `Sending 1 ꜩ to ${minifyTezosAddress(inputToAddr || user.userAddress)}` : `Request 1 ꜩ`}
+                {isLocalLoading ? `Sending 1 ꜩ to ${minifyTezosAddress(to)}` : `Request 1 ꜩ`}
             </Button>
             {isLocalLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : ""}
         </>

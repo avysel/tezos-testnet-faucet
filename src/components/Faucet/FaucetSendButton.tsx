@@ -41,7 +41,7 @@ function FaucetSendButton({ user, network, Tezos, status }: { user: any, network
     return (
         <>
             <Button variant="outline-danger"
-                disabled={status.isLoading}
+                disabled={status.isLoading || !user}
                 onClick={send}>
                 {isLocalLoading ? `Sending 1 ꜩ to faucet` : `Send 1 ꜩ to faucet`}
             </Button>

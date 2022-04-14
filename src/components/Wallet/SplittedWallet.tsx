@@ -2,13 +2,13 @@ import { BeaconEvent, defaultEventCallbacks } from "@airgap/beacon-sdk";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TezosToolkit } from "@taquito/taquito";
 import config from '../../config/config.json';
-import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { displayBalance, getNetworkType } from "../../lib/Utils";
+import { useEffect } from "react";
+import { Button, Card} from "react-bootstrap";
+import { getNetworkType } from "../../lib/Utils";
+import { PersonFill } from "react-bootstrap-icons";
+import UserInfo from "../Faucet/UserInfo";
 
 function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user: any, tezos: any, defaultNetwork: any, testnetContexts: any[] }) {
-
-    const [balanceList, setBalanceList] = useState<any>();
 
     /**
      * Set user address and balances on wallet connection
@@ -39,28 +39,6 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
             console.log(error);
         }
     };
-
-    /**
-     * Update balance display from context data
-     */
-    const updateBalances = (): void => {
-
-        let bl = testnetContexts.map((context) =>
-            <Col>
-                <b>{context.network.name} balance: </b>
-                {displayBalance(context.userBalance)} ꜩ
-            </Col>
-        );
-        setBalanceList(bl);
-    }
-
-
-    useEffect(
-        () => {
-            updateBalances();
-        },
-        [testnetContexts.map(context => context.userBalance)],
-    );
 
     useEffect(() => {
         (async () => {
@@ -113,12 +91,7 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
             <Card.Body>
                 {(user.userAddress != null && user.userAddress != "") &&
                     <Card.Text>
-                        <div><b>Address:</b> {user.userAddress}</div>
-                        <Container className="balances">
-                            <Row>
-                                {balanceList}
-                            </Row>
-                        </Container>
+                        <UserInfo user={user} displayBalance={false}/>
                         <br />
                         <div><Button variant="outline-danger" onClick={disconnectWallet}>Disconnect</Button></div>
                     </Card.Text>

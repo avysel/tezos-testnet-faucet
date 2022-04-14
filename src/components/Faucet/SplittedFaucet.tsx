@@ -1,10 +1,10 @@
 import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import { TezosToolkit } from '@taquito/taquito';
 import FaucetInfo from "./FaucetInfo";
-import FaucetRequestButton from "./FaucetRequestButton";
-import FaucetSendButton from "./FaucetSendButton";
-import { Alert, Card } from "react-bootstrap";
+import { Alert, Card, Col, Row } from "react-bootstrap";
 import Parser from 'html-react-parser';
+import FaucetToWalletRequest from "./FaucetToWalletRequest";
+import FaucetToInputRequest from "./FaucetToInputRequest";
 
 type StatusContext = {
     isLoading: boolean;
@@ -43,7 +43,7 @@ function SplittedFaucet({ network, user, Tezos }: { network: any, user: any, Tez
     }, [isLoading]);
 
     useEffect(() => {
-        if(statusType && statusType !== "")
+        if (statusType && statusType !== "")
             setShowAlert(true);
     }, [statusType]);
 
@@ -51,20 +51,32 @@ function SplittedFaucet({ network, user, Tezos }: { network: any, user: any, Tez
         <Card>
             <Card.Header>{network.name} faucet</Card.Header>
             <Card.Body>
-                <FaucetInfo faucetAddress={faucetAddress} faucetBalance={faucetBalance} />
-                <FaucetRequestButton network={network} user={user} status={statusContext} />
-                &nbsp;
-                {network.allowSendButton &&
 
-                    <FaucetSendButton network={network} user={user} Tezos={Tezos} status={statusContext} />
-                }
-                <br />
-                <br />
-                {showAlert && status &&
-                    <Alert variant={statusType} onClose={() => setShowAlert(false)} dismissible>
-                        {Parser(status)}
-                    </Alert>
-                }
+                <Row>
+                    <Col>
+                        <FaucetInfo faucetAddress={faucetAddress} faucetBalance={faucetBalance} />
+                        <hr />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className="faucet-part">
+                        <FaucetToWalletRequest network={network} user={user} status={statusContext} Tezos={Tezos} />
+                    </Col>
+                    <Col className="faucet-part">
+                        <FaucetToInputRequest network={network} status={statusContext} />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <br />
+                        {showAlert && status &&
+                            <Alert variant={statusType} onClose={() => setShowAlert(false)} dismissible>
+                                {Parser(status)}
+                            </Alert>
+                        }
+                    </Col>
+                </Row>
+
             </Card.Body>
         </Card>
     )
