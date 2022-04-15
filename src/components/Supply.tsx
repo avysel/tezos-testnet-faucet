@@ -7,12 +7,13 @@ function Supply() {
         <Card.Header>You like this faucet?</Card.Header>
         <Card.Body>
             <Card.Title>You can help us keeping this faucet alive:</Card.Title>
+            <Card.Text></Card.Text>
             <Card.Text>
-                <p></p>
-                <p>Send ꜩ to faucet testnets addresses to supply it with new ꜩ.</p>
-                <p>Send ꜩ to <b>{config.application.adminAddress}</b> on mainnet to help us supporting faucet costs.</p>
+                Send ꜩ to faucet testnets addresses to supply it with new ꜩ.
             </Card.Text>
-
+            <Card.Text>
+                Send ꜩ to <b>{config.application.adminAddress}</b> on mainnet to help us supporting faucet costs.
+            </Card.Text>
         </Card.Body>
         </Card>
     )

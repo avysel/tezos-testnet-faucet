@@ -86,7 +86,6 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
                 {(user.userAddress != null && user.userAddress != "") &&
                     <Card.Text>
                         <UserInfo user={user} displayBalance={false}/>
-                        <br />
                         <div><Button variant="outline-danger" onClick={disconnectWallet}>Disconnect</Button></div>
                     </Card.Text>
                 }
