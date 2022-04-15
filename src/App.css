@@ -24,6 +24,10 @@ div.balances {
     margin: top 20px!important;
 }
 
+.faucet-part-user {
+    margin-bottom: 10px;
+}
+
 .faucet-address-to {
     margin-bottom:10px;
 }
