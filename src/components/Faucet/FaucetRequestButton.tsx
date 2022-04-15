@@ -106,8 +106,10 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
             >
                 <DropletFill />&nbsp;
                 {isLocalLoading ? `Sending 1 ꜩ to ${minifyTezosAddress(to)}` : `Request 1 ꜩ`}
+                
+                &nbsp;{isLocalLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : ""}
             </Button>
-            {isLocalLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : ""}
+            
         </>
     )
 }
