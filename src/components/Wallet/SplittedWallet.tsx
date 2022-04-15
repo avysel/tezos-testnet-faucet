@@ -3,7 +3,7 @@ import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TezosToolkit } from "@taquito/taquito";
 import config from '../../config/config.json';
 import { useEffect } from "react";
-import { Button, Card} from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { getNetworkType } from "../../lib/Utils";
 import UserInfo from "../Faucet/UserInfo";
 
@@ -84,10 +84,14 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
             <Card.Header>My wallet</Card.Header>
             <Card.Body>
                 {(user.userAddress != null && user.userAddress != "") &&
-                    <Card.Text>
-                        <UserInfo user={user} displayBalance={false}/>
-                        <div><Button variant="outline-danger" onClick={disconnectWallet}>Disconnect</Button></div>
-                    </Card.Text>
+                    <>
+                        <Card.Text>
+                            <UserInfo user={user} displayBalance={false} />
+                        </Card.Text>
+                        <Card.Text>
+                            <Button variant="outline-danger" onClick={disconnectWallet}>Disconnect</Button>
+                        </Card.Text>
+                    </>
                 }
 
                 {(user.userAddress == null || user.userAddress == "") &&
