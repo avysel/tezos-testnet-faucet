@@ -2,13 +2,12 @@ import { BeaconEvent, defaultEventCallbacks } from "@airgap/beacon-sdk";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TezosToolkit } from "@taquito/taquito";
 import config from '../../config/config.json';
-import { useEffect, useState } from "react";
-import { Button, Card, Col, Container, Row } from "react-bootstrap";
-import { displayBalance, getNetworkType } from "../../lib/Utils";
+import { useEffect } from "react";
+import { Button, Card } from "react-bootstrap";
+import { getNetworkType } from "../../lib/Utils";
+import UserInfo from "../Faucet/UserInfo";
 
 function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user: any, tezos: any, defaultNetwork: any, testnetContexts: any[] }) {
-
-    const [balanceList, setBalanceList] = useState<any>();
 
     /**
      * Set user address and balances on wallet connection
@@ -39,28 +38,6 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
             console.log(error);
         }
     };
-
-    /**
-     * Update balance display from context data
-     */
-    const updateBalances = (): void => {
-
-        let bl = testnetContexts.map((context) =>
-            <Col>
-                <b>{context.network.name} balance: </b>
-                {displayBalance(context.userBalance)} ꜩ
-            </Col>
-        );
-        setBalanceList(bl);
-    }
-
-
-    useEffect(
-        () => {
-            updateBalances();
-        },
-        [testnetContexts.map(context => context.userBalance)],
-    );
 
     useEffect(() => {
         (async () => {
@@ -94,15 +71,10 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
     const disconnectWallet = async (): Promise<void> => {
         user.setUserAddress("");
         user.setUserBalance(0);
-        //tezos.setWallet(null);
         const tezosTK = new TezosToolkit(defaultNetwork.rpcUrl);
         tezos.setTezos(tezosTK);
-        //console.log("disconnecting wallet");
         if (tezos.wallet) {
             await tezos.wallet.clearActiveAccount();
-            /*await tezos.wallet.client.removeAllAccounts();
-            await tezos.wallet.client.removeAllPeers();
-            await tezos.wallet.client.destroy();*/
         }
         location.reload();
     };
@@ -112,16 +84,14 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
             <Card.Header>My wallet</Card.Header>
             <Card.Body>
                 {(user.userAddress != null && user.userAddress != "") &&
-                    <Card.Text>
-                        <div><b>Address:</b> {user.userAddress}</div>
-                        <Container className="balances">
-                            <Row>
-                                {balanceList}
-                            </Row>
-                        </Container>
-                        <br />
-                        <div><Button variant="outline-danger" onClick={disconnectWallet}>Disconnect</Button></div>
-                    </Card.Text>
+                    <>
+                        <Card.Text>
+                            <UserInfo user={user} displayBalance={false} />
+                        </Card.Text>
+                        <Card.Text>
+                            <Button variant="outline-danger" onClick={disconnectWallet}>Disconnect</Button>
+                        </Card.Text>
+                    </>
                 }
 
                 {(user.userAddress == null || user.userAddress == "") &&

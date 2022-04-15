@@ -91,8 +91,14 @@ function App() {
         </Row>
 
         <Row>
-          <Col><SplittedFaucet network={config.networks.hangzhounet} user={hangzhounetUser} Tezos={hanghzounetTezos} /></Col>
-          <Col><SplittedFaucet network={config.networks.ithacanet} user={ithacanetUser} Tezos={ithacanetTezos} /></Col>
+          <Col>
+            <SplittedFaucet network={config.networks.ithacanet} user={ithacanetUser} Tezos={ithacanetTezos} />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <SplittedFaucet network={config.networks.hangzhounet} user={hangzhounetUser} Tezos={hanghzounetTezos} />
+          </Col>
         </Row>
 
         <Row>
