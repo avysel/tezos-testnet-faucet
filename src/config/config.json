@@ -2,20 +2,10 @@
     "application": {
         "name": "Tezos testnet faucet",
         "adminAddress": "tz1SHho3cRGrpDtobZgA7V8Z2CpKQrbULTFj",
-        "defaultUrl": "https://ithacanet.smartpy.iohttps://hangzhounet.api.tez.ie",
+        "defaultUrl": "https://ithacanet.smartpy.io",
         "googleCaptchaSiteKey":"6LeiK14fAAAAAPptX4v49I4wSrHjOrU2cb_y5oII"
     },
     "networks": {
-        "hangzhounet": {
-            "code": "HZ",
-            "name": "Hangzounet",
-            "rpcUrl": "https://hangzhounet.api.tez.ie",
-            "faucetAddress": "tz1M7bSAveoHz7vgo7rZGwxxLyoAWvouCdT8",
-            "balanceMax": 5,
-            "viewer": "https://hangzhou.tzstats.com",
-            "checksum": "QfKICN5czM5MWMmVWM5QTY1ImZ0czYjhTN5gDOjRWZiZWZhlTM1YzMxIDZiAiOiUGZvN2Xu9Wa0FmdpR3YhJSCKwiIwEDMzAjN5QDOzEjIgojI05Wdv1WYikgCsICV3hTWld1VRVzTiAiOiQmcvd3czFGcikgCsIie5hnLzRXZuRnelRHQhRHZhdHekVmLxZmay1GanVmIgojIslWYtVmIJoALdlgCig2cp5WY2JSCJoALiwWYnVGbslmIJkgCsICdlBnIJkgCsIyYpZmZhJHdikQCKwiI0FWZodnIJkgCsISbhJ3ZvJHcikQCKwiIkxWa3JSCJoALik3bq5WZikQCKwiI0FGajJSCJoALiUmds9mdulmIJkgCsICbhlGdhB3cikQCKwiIlZXayJXYikQCKwiI0hXZuJSCJoALiwWYulmZikQCKwiIu9Wa05WZtJSCJowWgojIjlmbv1WZu1mIJoALigDVkNUdvZ3VB9WeMhHe3dkWydzbnZ3N6h0blZXQTJ2NNFje0JCI6ICarBnIJoALiQXZuV3bop3ZuFGSgI3bmBSes52bgM3J0lGI0VnQg4ycu9Wa0FGb1RXYydmbvNGIsQXagQmb19mZgkHbsFmbpZGI19WegwCbsV2ViAiOiIXZtlWYsN2cpRmIJowe",
-            "allowSendButton": false
-        },
         "ithacanet": {
             "code": "IT",
             "name": "Ithacanet",

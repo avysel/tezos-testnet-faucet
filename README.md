@@ -5,7 +5,6 @@
 One-click faucet for Tezos testnets.
 
 Currently supported:
-- Hangzhounet
 - Ithacanet
 
 ## URL
