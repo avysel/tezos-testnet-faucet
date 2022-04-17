@@ -99,7 +99,6 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
                         <Button variant="outline-primary" onClick={connectWallet}>Sync wallet</Button>
                     </Card.Text>
                 }
-
             </Card.Body>
         </Card>
     )

@@ -6,7 +6,6 @@ import FaucetRequestButton from "./FaucetRequestButton";
 function FaucetToInputRequest({ network, status }: { network: any, status: any }) {
 
     const [inputToAddr, setInputToAddr] = useState<string>("");
-    const [disabledButton, setDisabledButton] = useState<boolean>(false);
     const [inputClass, setInputClass] = useState<string>("");
 
     const inputId = network.name + "-to";
@@ -17,7 +16,6 @@ function FaucetToInputRequest({ network, status }: { network: any, status: any }
 
         if (isValidTezosAddress(value) || value.length == 0) {
             setInputToAddr(value);
-            setDisabledButton(false);
 
             if (value.length > 0)
                 setInputClass("is-valid");
@@ -25,7 +23,6 @@ function FaucetToInputRequest({ network, status }: { network: any, status: any }
                 setInputClass("");
         }
         else {
-            setDisabledButton(true);
             setInputClass("is-invalid");
         }
     };

@@ -23,8 +23,6 @@ function toBalance(balance: number): string {
 
 function getNetworkType(networkCode: string): NetworkType | undefined {
     switch (networkCode) {
-        case config.networks.hangzhounet.code:
-            return NetworkType.HANGZHOUNET;
         case config.networks.ithacanet.code:
             return NetworkType.ITHACANET;
     }
