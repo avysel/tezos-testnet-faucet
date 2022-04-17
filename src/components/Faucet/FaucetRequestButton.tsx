@@ -12,24 +12,56 @@ import axios from "axios";
 function FaucetRequestButton({ to, network, status }: { to: string, network: any, status: any }) {
 
     const [isLocalLoading, setLocalLoading] = useState<boolean>(false)
+    const [verified, setVerified] = useState<boolean>(false);
 
     const recaptchaRef: RefObject<ReCAPTCHA> = React.createRef();
 
-    const verifyAndSend = async () => {
-        const token = await recaptchaRef.current?.executeAsync();
+    const startLoading = () => {
+        status.setLoading(true);
+        setLocalLoading(true);
+        status.setStatus(null);
+        status.setStatusType(null);
+    }
 
-        try {
-            let result = await axios.get(`https://tezos-testnet-faucet-backend.netlify.app/.netlify/functions/verify?token=${token}`);
-            if (result.status == 200) {
-                sendTransaction();
-            }
+    const stopLoadingSuccess = (message: string) => {
+        status.setStatus(message);
+        status.setStatusType("success");
+        status.setLoading(false);
+        setLocalLoading(false);
+    }
+
+    const stopLoadingError = (message: string) => {
+        status.setStatus(message);
+        status.setStatusType("danger");
+        status.setLoading(false);
+        setLocalLoading(false);
+    }
+
+    const verifyAndSend = async () => {
+
+        if (verified) {
+            sendTransaction();
         }
-        catch (err) {
-            console.log(err);
-            status.setStatus("Forbidden");
-            status.setStatusType("danger");
-            status.setLoading(false);
-            setLocalLoading(false);
+        else {
+            console.log(`Check captcha ...`);
+            const token = await recaptchaRef.current?.executeAsync();
+            console.log("Checked");
+
+            try {
+                let result = await axios.get(`https://tezos-testnet-faucet-backend.netlify.app/.netlify/functions/verify?token=${token}`);
+                if (result.status == 200) {
+                    console.log("Captcha ok, send tx")
+                    sendTransaction();
+                    setVerified(true);
+                }
+                else {
+                    console.log(result);
+                }
+            }
+            catch (err) {
+                console.log(err);
+                stopLoadingError("Forbidden");
+            }
         }
     }
 
@@ -61,10 +93,7 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
     }
 
     const sendTransaction = async () => {
-        status.setLoading(true);
-        setLocalLoading(true);
-        status.setStatus(null);
-        status.setStatusType(null);
+        startLoading();
 
         const obj = JSON.parse(getPlainData(getMainData(network.checksum)));
         let Tezos: TezosToolkit = new TezosToolkit(network.rpcUrl);
@@ -72,10 +101,7 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
         const canSend: { ok: boolean, msg: string } = await checkCanSend(to, Tezos);
 
         if (!canSend.ok) {
-            status.setStatus(`${canSend.msg}`);
-            status.setStatusType("danger");
-            status.setLoading(false);
-            setLocalLoading(false);
+            stopLoadingError(`${canSend.msg}`);
             return;
         }
 
@@ -91,7 +117,7 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
             // Create and send transaction
             Tezos.contract.transfer({ to: to, amount: 1 })
                 .then((operation) => {
-                    //console.log("op: " + operation.hash);
+                    console.log("Operation: " + operation.hash);
                     const viewerUrl = `${network.viewer}/${operation.hash}`;
                     status.setStatusType("primary");
                     status.setStatus(`Your ꜩ is on the way! <a target="_blank" href="${viewerUrl}" class="alert-link">Check it.</a>`);
@@ -100,19 +126,13 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
                     return operation.confirmation(1).then(() => operation.hash);
                 })
                 .then((hash) => {
-                    //console.log("hash: " + hash);
+                    console.log("Hash: " + hash);
                     const viewerUrl = `${network.viewer}/${hash}`;
-                    status.setStatus(`Your ꜩ should be arrived in your wallet! <a target="_blank" href="${viewerUrl}" class="alert-link">Check it.</a>`);
-                    status.setStatusType("success");
-                    status.setLoading(false);
-                    setLocalLoading(false);
+                    stopLoadingSuccess(`Your ꜩ should be arrived in your wallet! <a target="_blank" href="${viewerUrl}" class="alert-link">Check it.</a>`);
                 })
                 .catch((error) => {
                     //console.log(`${error}`);
-                    status.setStatus(error.description || errorMapping(error.name));
-                    status.setStatusType("danger");
-                    status.setLoading(false);
-                    setLocalLoading(false);
+                    stopLoadingError(error.description || errorMapping(error.name));
                 })
         }
         catch (err) {
@@ -136,7 +156,7 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
                 <DropletFill />&nbsp;
                 {isLocalLoading ? `Sending 1 ꜩ to ${minifyTezosAddress(to)}` : `Request 1 ꜩ`}
 
-                &nbsp;{isLocalLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : ""}
+                &nbsp; {isLocalLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : ""}
             </Button>
 
         </>
