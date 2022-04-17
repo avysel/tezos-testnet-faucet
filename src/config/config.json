@@ -2,7 +2,8 @@
     "application": {
         "name": "Tezos testnet faucet",
         "adminAddress": "tz1SHho3cRGrpDtobZgA7V8Z2CpKQrbULTFj",
-        "defaultUrl": "https://hangzhounet.api.tez.ie"
+        "defaultUrl": "https://ithacanet.smartpy.iohttps://hangzhounet.api.tez.ie",
+        "googleCaptchaSiteKey":"6LeiK14fAAAAAPptX4v49I4wSrHjOrU2cb_y5oII"
     },
     "networks": {
         "hangzhounet": {

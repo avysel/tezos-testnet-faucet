@@ -1,18 +1,42 @@
+import React, { RefObject, useState } from "react";
 import { importKey } from "@taquito/signer";
 import { TezosToolkit } from "@taquito/taquito";
-import { useState } from "react";
 import { Button, Spinner } from "react-bootstrap"
 import { DropletFill } from "react-bootstrap-icons";
+import ReCAPTCHA from "react-google-recaptcha";
 import { errorMapping } from "../../lib/Errors";
+import config from '../../config/config.json';
 import { getMainData, getPlainData, isValidTezosAddress, minifyTezosAddress } from "../../lib/Utils";
+import axios from "axios";
 
 function FaucetRequestButton({ to, network, status }: { to: string, network: any, status: any }) {
 
-    const [isLocalLoading, setLocalLoading] = useState<boolean>(false);
-    const [disabledButton, setDisabledButton] = useState<boolean>(false);
+    const [isLocalLoading, setLocalLoading] = useState<boolean>(false)
+
+    const recaptchaRef: RefObject<ReCAPTCHA> = React.createRef();
+
+    const verifyAndSend = async () => {
+        const token = await recaptchaRef.current?.executeAsync();
+
+        try {
+            let result = await axios.get(`https://tezos-testnet-faucet-backend.netlify.app/.netlify/functions/verify?token=${token}`);
+            if (result.status == 200) {
+                sendTransaction();
+            }
+        }
+        catch (err) {
+            console.log(err);
+            status.setStatus("Forbidden");
+            status.setStatusType("danger");
+            status.setLoading(false);
+            setLocalLoading(false);
+        }
+    }
 
     const checkCanSend = async (to: string, Tezos: TezosToolkit): Promise<{ ok: boolean, msg: string }> => {
         try {
+
+            recaptchaRef.current?.execute();
 
             const userBalance = await Tezos.tz.getBalance(to);
 
@@ -98,18 +122,23 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
 
     return (
         <>
+            <ReCAPTCHA
+                ref={recaptchaRef}
+                size="invisible"
+                sitekey={config.application.googleCaptchaSiteKey}
+            />
 
             <Button
                 variant="primary"
-                disabled={status.isLoading || disabledButton || !to}
-                onClick={sendTransaction}
+                disabled={status.isLoading || !to}
+                onClick={verifyAndSend}
             >
                 <DropletFill />&nbsp;
                 {isLocalLoading ? `Sending 1 ꜩ to ${minifyTezosAddress(to)}` : `Request 1 ꜩ`}
-                
+
                 &nbsp;{isLocalLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : ""}
             </Button>
-            
+
         </>
     )
 }
