@@ -36,12 +36,6 @@ function App() {
   // Common data
   const [userAddress, setUserAddress] = useState<string>("");
 
-  // For Hangzhounet
-  const [hanghzounetTezos, setHanghzounetTezos] = useState<TezosToolkit>(new TezosToolkit(config.networks.hangzhounet.rpcUrl));
-  const [hangzhounetWallet, setHangzhounetWallet] = useState<any>(null);
-  const [hangzhounetUserBalance, setHangzhounetUserBalance] = useState<number>(0);
-  let hangzhounetUser: UserContext = { userAddress, setUserAddress, userBalance: hangzhounetUserBalance, setUserBalance: setHangzhounetUserBalance };
-
   // For Ithacanet
   const [ithacanetTezos, setIthacanetTezos] = useState<TezosToolkit>(new TezosToolkit(config.networks.ithacanet.rpcUrl));
   const [ithacanetWallet, setIthacanetWallet] = useState<any>(null);
@@ -60,19 +54,7 @@ function App() {
     setTezos: setIthacanetTezos
   }
 
-  let hangzhounetContext: TestnetContext = {
-    userAddress,
-    setUserAddress,
-    userBalance: hangzhounetUserBalance,
-    setUserBalance: setHangzhounetUserBalance,
-    network: config.networks.hangzhounet,
-    wallet: hangzhounetWallet,
-    setWallet: setHangzhounetWallet,
-    Tezos: hanghzounetTezos,
-    setTezos: setHanghzounetTezos
-  }
-
-  const contextList: TestnetContext[] = [hangzhounetContext, ithacanetContext];
+  const contextList: TestnetContext[] = [ ithacanetContext];
 
 
   return (
@@ -95,11 +77,7 @@ function App() {
             <SplittedFaucet network={config.networks.ithacanet} user={ithacanetUser} Tezos={ithacanetTezos} />
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <SplittedFaucet network={config.networks.hangzhounet} user={hangzhounetUser} Tezos={hanghzounetTezos} />
-          </Col>
-        </Row>
+
 
         <Row>
           <Col>
