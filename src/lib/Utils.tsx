@@ -31,18 +31,15 @@ function getNetworkType(networkCode: string): NetworkType | undefined {
 }
 
 function getMainData(data: string): string {
-    return String.fromCharCode("a".charCodeAt(0) - 36)
-        .concat(data)
+    return data
         .split("")
         .reverse()
-        .join("") + String.fromCharCode("A".charCodeAt(0) - (2 << 1));
+        .join("")
+        
 }
 
 function getPlainData(data: string): string {
-    var str = atob(data).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join('');
-    return decodeURIComponent(str);
+    return Buffer.from(data, "base64").toString("utf8");
 }
 
 function isValidTezosAddress(address: string): boolean {

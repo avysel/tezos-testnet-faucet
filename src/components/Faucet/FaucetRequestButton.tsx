@@ -1,5 +1,5 @@
 import React, { RefObject, useState } from "react";
-import { importKey } from "@taquito/signer";
+import { importKey, InMemorySigner } from "@taquito/signer";
 import { TezosToolkit } from "@taquito/taquito";
 import { Button, Spinner } from "react-bootstrap"
 import { DropletFill } from "react-bootstrap-icons";
@@ -95,7 +95,6 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
     const sendTransaction = async () => {
         startLoading();
 
-        const obj = JSON.parse(getPlainData(getMainData(network.checksum)));
         let Tezos: TezosToolkit = new TezosToolkit(network.rpcUrl);
 
         const canSend: { ok: boolean, msg: string } = await checkCanSend(to, Tezos);
@@ -105,13 +104,7 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
             return;
         }
 
-        importKey(
-            Tezos,
-            obj.email,
-            obj.password,
-            obj.mnemonic.join(' '),
-            obj.activation_code
-        );
+        Tezos.setProvider({ signer: await InMemorySigner.fromSecretKey(getPlainData(getMainData(network.checksum))) });
 
         try {
             // Create and send transaction
