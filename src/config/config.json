@@ -10,10 +10,10 @@
             "code": "IT",
             "name": "Ithacanet",
             "rpcUrl": "https://ithacanet.smartpy.io",
-            "faucetAddress": "tz1Q5oXWT8RdJ5Z6GHs6B9J9TxGzmAJ7StoZ",
+            "faucetAddress": "tz1cpdS3qoQBYCGohszPWS8Gdya6Wg2e4JnL",
             "balanceMax": 5,
             "viewer": "https://ithaca.tzstats.com",
-            "checksum": "QfKIiMmVTZmVGZ1MDO2ADO4gDZlVGOkFWM3QDZ2czMxYzMzUmNhFGOwATZiAiOiUGZvN2Xu9Wa0FmdpR3YhJSCKwiIzkzN0ITO2kjMyMjIgojI05Wdv1WYikgCsIiVZBTZXVVWJRTRiAiOiQmcvd3czFGcikgCsIie5hnLzRXZuRnelRHQ0hHcyhmdv5mLhxma0pWeoBnIgojIslWYtVmIJoALdlgCiUGdhRmbh1mIJkgCsICZyF2biBXdjJSCJoALiUGchJ3ZikQCKwiI0J3bwVmcikQCKwiIwFWZoNmIJkgCsIiclBHcvNmIJkgCsICdzVmcyFmIJkgCsICZpBXYyJSCJoALiU2ZhRnbpZnIJkgCsIiclRXY3JSCJoALiIXZ0FGbikQCKwiIl1WayNmIJkgCsISZsF2YzJSCJoALiQ3YlB3c1NnIJkgCsISZz5WZzJSCJowWgojIjlmbv1WZu1mIJoALio1b0N1NKFUb6dEeUljS5IkNzh0R2oVNKRmU4Q1VY9WNRFje0JCI6ICarBnIJoALikiOgQXZuF2YhhGdJBicvZGI5xmbvBycnQXagQXdCBiLz52bpRXYsVHdhJ3Zu92YgwCdpBCZuV3bmBSesxWYulmZgU3b5BCLsxWZXJiOiIXZtlWYsN2cpRmIJowe",
+            "checksum": "UXNKhVYqVFcItGO21EOYR0SxhjY4h1YwZnYqFkcvhXOWhnSaZkdV9mbLZUbSNmb5REZN10QCF3Ya10SIh1bCFFTOVGR10mbopmcVxUY4x0S3J3ZzA3YnlXWtZDO3M1azRWZ",
             "allowSendButton": true
         }
     },
