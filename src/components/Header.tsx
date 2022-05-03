@@ -1,7 +1,7 @@
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import { Github, Twitter } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
-import config from '../config/config.json';
+import Config from "../Config";
 
 function Header() {
     return (
@@ -10,7 +10,7 @@ function Header() {
                 <Nav>
                     <Navbar.Brand>
                         <Link className="nav-link" to="/">
-                            {config.application.name}
+                            {Config.application.name}
                         </Link>
                     </Navbar.Brand>
                 </Nav>

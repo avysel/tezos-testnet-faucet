@@ -52,3 +52,63 @@ Deploy on Github Pages
 ```
 npm run deploy
 ```
+
+Parameter the port with environment variable:
+```
+PORT=3000
+```
+
+Default is `1234`.
+
+### Config
+
+Config file is `Config.tsx`.
+
+Update this file to plug the faucet on another testnet.
+
+Create a new `const` with testnet parameters:
+
+```
+const IthacanetConfig = {
+    "name": "Ithacanet",
+    "rpcUrl": "https://ithacanet.smartpy.io",
+    "faucetAddress": "tz1cpdS3qoQBYCGohszPWS8Gdya6Wg2e4JnL",
+    "balanceMax": 5,
+    "viewer": "https://ithaca.tzstats.com",
+    "checksum": "xxx",
+    "allowSendButton": true,
+    "networkType": NetworkType.ITHACANET
+};
+```
+
+- ```name```: the application name, to be displayed on both web page and wallet when asking for connection.
+- ```rpcUrl```: the RPC endpoint to connect to
+- ```faucetAddress```: faucet public address
+- ```balanceMax```: maximum balance fo a wallet to request a ꜩ.
+- ```viewer```: URL of a viewer that allow to display operation detail like `http://viewer-url.com/{tx_hash}`
+- ```allowSendButton```: `true` to display a button to create a tx that send 1 ꜩ from user to faucet, `false` otherwise
+- ```networkType```: a constant from @airgap/beacon-sdk/NetworkType that represent the testnet
+
+Then use this new object to be returned as `network` field of `Config` export:
+
+```
+const Config = { application: ApplicationConfig, network: IthacanetConfig };
+```
+
+### Backend
+
+This front-end faucet uses a backend to manage secrets. Please refer to backend project (if you are allowed to) to update testnet secret configuration.
+
+
+### Deploy
+
+Build Docker image:
+
+```
+docker build . -t tezos-ithacanet-faucet
+```
+
+Run Docker image:
+```
+docker run -p 8000:80 tezos-ithacanet-faucet
+```

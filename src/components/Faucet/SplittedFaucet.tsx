@@ -5,6 +5,7 @@ import { Alert, Card, Col, Row } from "react-bootstrap";
 import Parser from 'html-react-parser';
 import FaucetToWalletRequest from "./FaucetToWalletRequest";
 import FaucetToInputRequest from "./FaucetToInputRequest";
+import { Network, UserContext } from "../../lib/Types";
 
 type StatusContext = {
     isLoading: boolean;
@@ -15,7 +16,7 @@ type StatusContext = {
     setStatus: Dispatch<SetStateAction<string>>;
 }
 
-function SplittedFaucet({ network, user, Tezos }: { network: any, user: any, Tezos: TezosToolkit }) {
+function SplittedFaucet({ network, user, Tezos }: { network: Network, user: UserContext, Tezos: TezosToolkit }) {
 
     const faucetAddress = network.faucetAddress;
     const [faucetBalance, setFaucetBalance] = useState<number>(0);
@@ -32,7 +33,8 @@ function SplittedFaucet({ network, user, Tezos }: { network: any, user: any, Tez
             const faucetBalance = await Tezos.tz.getBalance(faucetAddress);
             setFaucetBalance(faucetBalance.toNumber());
 
-            user.setUserBalance(await Tezos.tz.getBalance(user.userAddress));
+            const userBalance = await Tezos.tz.getBalance(user.userAddress);
+            user.setUserBalance(userBalance.toNumber());
         } catch (error) {
             //console.log(error);
         }

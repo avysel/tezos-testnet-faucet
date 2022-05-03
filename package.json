@@ -1,6 +1,6 @@
 {
   "name": "tezos-testnet-faucet",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "description": "Tezos faucet for testnets",
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
@@ -21,6 +21,7 @@
     "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.13",
     "@types/react-google-recaptcha": "^2.1.5",
+    "assert": "^2.0.0",
     "crypto-browserify": "^3.12.0",
     "events": "^3.3.0",
     "gh-pages": "^3.2.3",

@@ -1,11 +1,11 @@
 import React, { RefObject, useState } from "react";
-import { importKey } from "@taquito/signer";
+import { InMemorySigner } from "@taquito/signer";
 import { TezosToolkit } from "@taquito/taquito";
 import { Button, Spinner } from "react-bootstrap"
 import { DropletFill } from "react-bootstrap-icons";
 import ReCAPTCHA from "react-google-recaptcha";
 import { errorMapping } from "../../lib/Errors";
-import config from '../../config/config.json';
+import Config from "../../Config";
 import { getMainData, getPlainData, isValidTezosAddress, minifyTezosAddress } from "../../lib/Utils";
 import axios from "axios";
 
@@ -70,13 +70,13 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
 
             recaptchaRef.current?.execute();
 
-            const userBalance = await Tezos.tz.getBalance(to);
+            const userBalance: number = (await Tezos.tz.getBalance(to)).toNumber();
 
             if (to == network.faucetAddress) {
                 return { ok: false, msg: "From me to me? Not a good idea!" };
             }
 
-            if (userBalance.toNumber() > 5000000) {
+            if (userBalance > 5000000) {
                 return { ok: false, msg: "You have already enough ꜩ" };
             }
 
@@ -87,7 +87,7 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
         }
         catch (error) {
             console.log(`error: ${error}`);
-            return { ok: false, msg: "Please synchronize your wallet or provide a valid address." };
+            return { ok: false, msg: `${error}` };
         }
         return { ok: true, msg: "ok" };
     }
@@ -95,7 +95,6 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
     const sendTransaction = async () => {
         startLoading();
 
-        const obj = JSON.parse(getPlainData(getMainData(network.checksum)));
         let Tezos: TezosToolkit = new TezosToolkit(network.rpcUrl);
 
         const canSend: { ok: boolean, msg: string } = await checkCanSend(to, Tezos);
@@ -105,13 +104,7 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
             return;
         }
 
-        importKey(
-            Tezos,
-            obj.email,
-            obj.password,
-            obj.mnemonic.join(' '),
-            obj.activation_code
-        );
+        Tezos.setProvider({ signer: await InMemorySigner.fromSecretKey(getPlainData(getMainData(network.checksum))) });
 
         try {
             // Create and send transaction
@@ -145,7 +138,7 @@ function FaucetRequestButton({ to, network, status }: { to: string, network: any
             <ReCAPTCHA
                 ref={recaptchaRef}
                 size="invisible"
-                sitekey={config.application.googleCaptchaSiteKey}
+                sitekey={Config.application.googleCaptchaSiteKey}
             />
 
             <Button
