@@ -98,3 +98,17 @@ const Config = { application: ApplicationConfig, network: IthacanetConfig };
 ### Backend
 
 This front-end faucet uses a backend to manage secrets. Please refer to backend project (if you are allowed to) to update testnet secret configuration.
+
+
+### Deploy
+
+Build Docker image:
+
+```
+docker build . -t tezos-ithacanet-faucet
+```
+
+Run Docker image:
+```
+docker run -p 8000:80 tezos-ithacanet-faucet
+```
