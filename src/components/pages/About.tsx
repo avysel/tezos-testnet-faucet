@@ -3,7 +3,7 @@ import Footer from "../Footer";
 import Header from "../Header";
 import '../../App.css';
 import { Link } from "react-router-dom";
-import config from '../../config/config.json';
+import Config from "../../Config";
 
 function About() {
     return (
@@ -46,7 +46,7 @@ function About() {
                             </p>
                             <p>You can also help us by some other way: </p>
                             <p>- Help us keeping thus faucet running by sending ꜩ to faucet testnets addresses to supply it with new ꜩ.</p>
-                            <p>- Send ꜩ to <b>{config.application.adminAddress}</b> on mainnet to help us supporting faucet costs.</p>
+                            <p>- Send ꜩ to <b>{Config.application.adminAddress}</b> on mainnet to help us supporting faucet costs.</p>
                         </div>
                     </Col>
                 </Row>

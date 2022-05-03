@@ -1,5 +1,5 @@
 import Card from 'react-bootstrap/Card';
-import config from '../config/config.json';
+import Config from "../Config";
 
 function Supply() {
     return (
@@ -12,7 +12,7 @@ function Supply() {
                 Send ꜩ to faucet testnets addresses to supply it with new ꜩ.
             </Card.Text>
             <Card.Text>
-                Send ꜩ to <b>{config.application.adminAddress}</b> on mainnet to help us supporting faucet costs.
+                Send ꜩ to <b>{Config.application.adminAddress}</b> on mainnet to help us supporting faucet costs.
             </Card.Text>
         </Card.Body>
         </Card>

@@ -1,5 +1,4 @@
 import { TezosToolkit } from "@taquito/taquito";
-import { Row, Col } from "react-bootstrap";
 import FaucetRequestButton from "./FaucetRequestButton";
 import FaucetSendButton from "./FaucetSendButton";
 import UserInfo from "./UserInfo";

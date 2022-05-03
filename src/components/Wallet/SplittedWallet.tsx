@@ -1,13 +1,13 @@
 import { BeaconEvent, defaultEventCallbacks } from "@airgap/beacon-sdk";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { TezosToolkit } from "@taquito/taquito";
-import config from '../../config/config.json';
+import Config from "../../Config";
 import { useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
-import { getNetworkType } from "../../lib/Utils";
 import UserInfo from "../Faucet/UserInfo";
+import { Network, TestnetContext, UserContext } from "../../lib/Types";
 
-function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user: any, tezos: any, defaultNetwork: any, testnetContexts: any[] }) {
+function SplittedWallet({ user, testnetContext, network }: { user: UserContext, testnetContext: TestnetContext, network: Network }) {
 
     /**
      * Set user address and balances on wallet connection
@@ -16,23 +16,21 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
 
         user.setUserAddress(userAddress);
 
-        testnetContexts.map(async (context) => {
-            context.setUserAddress(userAddress);
-            const balance = await context.Tezos.tz.getBalance(userAddress);
-            context.setUserBalance(balance.toNumber());
-        })
+        const balance = await testnetContext.Tezos.tz.getBalance(userAddress);
+        user.setUserBalance(balance.toNumber());
+
     };
 
     const connectWallet = async (): Promise<void> => {
         try {
-            await tezos.wallet.requestPermissions({
+            await testnetContext.wallet.requestPermissions({
                 network: {
-                    type: getNetworkType(defaultNetwork.code),
-                    rpcUrl: defaultNetwork.rpcUrl
+                    type: network.networkType,
+                    rpcUrl: network.rpcUrl
                 }
             });
             // gets user's address
-            const userAddress = await tezos.wallet.getPKH();
+            const userAddress = await testnetContext.wallet.getPKH();
             await setup(userAddress);
         } catch (error) {
             console.log(error);
@@ -43,8 +41,8 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
         (async () => {
             // creates a wallet instance
             const wallet = new BeaconWallet({
-                name: config.application.name,
-                preferredNetwork: getNetworkType(defaultNetwork.code),
+                name: Config.application.name,
+                preferredNetwork: network.networkType,
                 disableDefaultEvents: true, // Disable all events / UI. This also disables the pairing alert.
                 eventHandlers: {
                     // To keep the pairing alert, we have to add the following default event handlers back
@@ -56,8 +54,8 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
                     }
                 }
             });
-            tezos.Tezos.setWalletProvider(wallet);
-            tezos.setWallet(wallet);
+            testnetContext.Tezos.setWalletProvider(wallet);
+            testnetContext.setWallet(wallet);
             // checks if wallet was connected before
             const activeAccount = await wallet.client.getActiveAccount();
             if (activeAccount) {
@@ -71,10 +69,10 @@ function SplittedWallet({ user, tezos, defaultNetwork, testnetContexts }: { user
     const disconnectWallet = async (): Promise<void> => {
         user.setUserAddress("");
         user.setUserBalance(0);
-        const tezosTK = new TezosToolkit(defaultNetwork.rpcUrl);
-        tezos.setTezos(tezosTK);
-        if (tezos.wallet) {
-            await tezos.wallet.clearActiveAccount();
+        const tezosTK = new TezosToolkit(network.rpcUrl);
+        testnetContext.setTezos(tezosTK);
+        if (testnetContext.wallet) {
+            await testnetContext.wallet.clearActiveAccount();
         }
         location.reload();
     };
