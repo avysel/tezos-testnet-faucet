@@ -1,10 +1,3 @@
-# FROM nginx:stable-alpine
-# RUN npm run build
-# COPY dist/ /usr/share/nginx/html
-
-
-
-
 FROM node:16-alpine as build
 
 WORKDIR /app
