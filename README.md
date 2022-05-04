@@ -21,44 +21,6 @@ Deployed on https://tezos-testnet-faucet.netlify.app.
 ---|---|---|---|---|---
 React | Parcel | Typescript | Taquito | Beacon wallet | React Bootstrap
 
-### Use
-
-Download
-```
-git clone git@github.com:avysel/tezos-testnet-faucet.git
-cd tezos-testnet-faucet
-```
-
-Install
-```
-npm install
-```
-Build for local
-``` 
-npm run build
-```
-
-Run on local server
-```
-npm run start
-```
-
-Build for deploy
-```
-npm run predeploy
-```
-
-Deploy on Github Pages
-```
-npm run deploy
-```
-
-Parameter the port with environment variable:
-```
-PORT=3000
-```
-
-Default is `1234`.
 
 ### Config
 
@@ -100,7 +62,63 @@ const Config = { application: ApplicationConfig, network: IthacanetConfig };
 This front-end faucet uses a backend to manage secrets. Please refer to backend project (if you are allowed to) to update testnet secret configuration.
 
 
-### Deploy
+## Deploy
+
+Download
+```
+git clone git@github.com:avysel/tezos-testnet-faucet.git
+cd tezos-testnet-faucet
+```
+
+Install
+```
+npm install
+```
+
+### Locally
+
+Build for local
+``` 
+npm run build
+```
+
+Run on local server
+```
+npm run start
+```
+
+Port can be set with environment variable:
+```
+PORT=3000
+```
+
+Default is `1234`.
+
+### To Github Pages
+
+Deploy static build to Github Pages on branch `gh-pages`:
+
+Build for deploy
+```
+npm run predeploy
+```
+
+Deploy on Github Pages
+```
+npm run deploy
+```
+
+Warning: the build uses `react-router-dom`, not compliant with Github Pages. There may be some bugs in navigation.
+
+So, `gh-pages` is more used as a repository to deploy to Netlify.
+
+### To Netlify
+
+Netlify listens to `gh-pages` branch and will automatically deploy when content is updated.
+
+### Build and deploy with Docker
+
+Use current `Dockerfile` to create a build then deploy it.
 
 Build Docker image:
 
@@ -110,5 +128,23 @@ docker build . -t tezos-ithacanet-faucet
 
 Run Docker image:
 ```
-docker run -p 8000:80 tezos-ithacanet-faucet
+docker run -p 80:80 tezos-ithacanet-faucet
 ```
+
+
+### Deploy static build with Docker
+
+First, build locally: 
+```
+npm run build
+```
+
+Then create a `Dockerfile` with
+
+```
+FROM nginx:stable-alpine
+RUN npm run build
+COPY dist/ /usr/share/nginx/html
+```
+
+And build & run it as above.

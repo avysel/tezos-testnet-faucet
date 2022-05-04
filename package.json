@@ -1,6 +1,6 @@
 {
   "name": "tezos-testnet-faucet",
-  "version": "0.4.2",
+  "version": "0.4.2-ithacanet",
   "description": "Tezos faucet for testnets",
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
