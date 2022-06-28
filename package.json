@@ -1,6 +1,6 @@
 {
   "name": "tezos-testnet-faucet",
-  "version": "0.4.2-ithacanet",
+  "version": "0.4.3-jakartanet",
   "description": "Tezos faucet for testnets",
   "source": "src/index.html",
   "browserslist": "> 0.5%, last 2 versions, not dead",
@@ -37,11 +37,11 @@
     "util": "^0.12.4"
   },
   "dependencies": {
-    "@airgap/beacon-sdk": "^2.3.13",
-    "@taquito/beacon-wallet": "^12.0.3",
-    "@taquito/signer": "^12.0.3",
-    "@taquito/taquito": "^12.0.3",
-    "@taquito/tezbridge-signer": "^12.0.3",
+    "@airgap/beacon-sdk": "^3.1.1",
+    "@taquito/beacon-wallet": "^13.0.0",
+    "@taquito/signer": "^13.0.0",
+    "@taquito/taquito": "^13.0.0",
+    "@taquito/tezbridge-signer": "^13.0.0",
     "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
     "cors": "^2.8.5",

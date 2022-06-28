@@ -1,35 +1,25 @@
 import { NetworkType } from "@airgap/beacon-sdk";
+import configData from './config.json';
+import { ConfigType } from "./lib/Types";
 
-const ApplicationConfig =
-{
-    "name": "Tezos testnet faucet",
-    "adminAddress": "tz1SHho3cRGrpDtobZgA7V8Z2CpKQrbULTFj",
-    "googleCaptchaSiteKey": "6LeiK14fAAAAAPptX4v49I4wSrHjOrU2cb_y5oII"
-};
+let Config: ConfigType = configData;
 
-const IthacanetConfig = {
-    "name": "Ithacanet",
-    "rpcUrl": "https://ithacanet.smartpy.io",
-    "faucetAddress": "tz1cpdS3qoQBYCGohszPWS8Gdya6Wg2e4JnL",
-    "balanceMax": 5,
-    "viewer": "https://ithaca.tzstats.com",
-    "checksum": "UXNKhVYqVFcItGO21EOYR0SxhjY4h1YwZnYqFkcvhXOWhnSaZkdV9mbLZUbSNmb5REZN10QCF3Ya10SIh1bCFFTOVGR10mbopmcVxUY4x0S3J3ZzA3YnlXWtZDO3M1azRWZ",
-    "allowSendButton": true,
-    "networkType": NetworkType.ITHACANET
-};
-
-
-const JakartanetConfig = {
-    "name": "Jakartanet",
-    "rpcUrl": "https://ithacanet.smartpy.io",
-    "faucetAddress": "tz1cpdS3qoQBYCGohszPWS8Gdya6Wg2e4JnL",
-    "balanceMax": 5,
-    "viewer": "https://ithaca.tzstats.com",
-    "checksum": "UXNKhVYqVFcItGO21EOYR0SxhjY4h1YwZnYqFkcvhXOWhnSaZkdV9mbLZUbSNmb5REZN10QCF3Ya10SIh1bCFFTOVGR10mbopmcVxUY4x0S3J3ZzA3YnlXWtZDO3M1azRWZ",
-    "allowSendButton": true,
-    "networkType": NetworkType.ITHACANET
+switch (Config.network.name) {
+    case "Mainnet":
+        Config.network.networkType = NetworkType.MAINNET;
+        break;
+    case "Ithacanet":
+        Config.network.networkType = NetworkType.ITHACANET;
+        break;
+    case "Jakartanet":
+        Config.network.networkType = NetworkType.JAKARTANET;
+        break;
+    default:
+        Config.network.networkType = undefined;
 }
 
-const Config = { application: ApplicationConfig, network: IthacanetConfig };
+Config.application.isBeaconWallet = (Config.network.networkType !== undefined);
+
+console.log(Config);
 
 export default Config;

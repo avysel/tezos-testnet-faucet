@@ -3,6 +3,29 @@ import { TezosToolkit } from "@taquito/taquito";
 import { BeaconWallet } from "@taquito/beacon-wallet";
 import { NetworkType } from "@airgap/beacon-sdk";
 
+type ApplicationConfig = {
+    name: string;
+    adminAddress: string;
+    googleCaptchaSiteKey: string;
+    isBeaconWallet?: boolean;
+}
+
+type NetworkConfig = {
+    name: string;
+    rpcUrl: string;
+    faucetAddress: string;
+    balanceMax: number;
+    viewer: string;
+    checksum: string;
+    allowSendButton: boolean;
+    networkType?: any;
+}
+
+type ConfigType = {
+    application: ApplicationConfig;
+    network: NetworkConfig;
+}
+
 // Must match Config.tsx "network" item
 type Network = {
     name: string;
@@ -30,4 +53,4 @@ type TestnetContext = {
     setTezos: Dispatch<SetStateAction<any>>;
 }
 
-export { Network, UserContext, TestnetContext };
+export { ConfigType, Network, UserContext, TestnetContext };
