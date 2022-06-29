@@ -10,11 +10,13 @@ import SplittedFaucet from "./components/Faucet/SplittedFaucet";
 import SplittedWallet from "./components/Wallet/SplittedWallet";
 import { Network, TestnetContext, UserContext } from "./lib/Types";
 import Config from "./Config";
+import About from "./components/pages/About";
 
 function App() {
 
   useEffect(() => {
     console.log(`Loading ${Config.network.name}`);
+    document.title = Config.application.name;
   }, []);
 
   // Common user data
@@ -59,7 +61,7 @@ function App() {
 
         <Row>
           <Col>
-            <Supply />
+            <About />
           </Col>
         </Row>
       </Container>

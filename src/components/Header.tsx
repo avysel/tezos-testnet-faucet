@@ -1,6 +1,5 @@
 import { Nav, Navbar, Container } from 'react-bootstrap';
 import { Github, Twitter } from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
 import Config from "../Config";
 
 function Header() {
@@ -9,16 +8,10 @@ function Header() {
             <Container fluid>
                 <Nav>
                     <Navbar.Brand>
-                        <Link className="nav-link" to="/">
-                            {Config.application.name}
-                        </Link>
+                        {Config.application.name}
                     </Navbar.Brand>
                 </Nav>
                 <Nav>
-
-                    <Link className="nav-link" to="/about">
-                        About
-                    </Link>
 
                     <Nav.Link href="https://github.com/avysel/tezos-testnet-faucet" target="_blank">
                         <Github />

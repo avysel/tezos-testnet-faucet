@@ -10,7 +10,15 @@ div.balances {
     margin-top:10px;
 }
 
-.content h1, .content h3 {
+.about {
+    margin-top: 50px;
+}
+
+.faucet-list {
+    margin-top: 50;
+}
+
+.content h2, .content h4 {
     margin-top:50px;
 }
 

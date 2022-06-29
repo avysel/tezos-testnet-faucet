@@ -10,20 +10,9 @@ type ApplicationConfig = {
     isBeaconWallet?: boolean;
 }
 
-type NetworkConfig = {
-    name: string;
-    rpcUrl: string;
-    faucetAddress: string;
-    balanceMax: number;
-    viewer: string;
-    checksum: string;
-    allowSendButton: boolean;
-    networkType?: any;
-}
-
 type ConfigType = {
     application: ApplicationConfig;
-    network: NetworkConfig;
+    network: Network;
 }
 
 // Must match Config.tsx "network" item
@@ -35,7 +24,7 @@ type Network = {
     viewer: string;
     checksum: string;
     allowSendButton: boolean;
-    networkType: NetworkType;
+    networkType?: NetworkType | undefined;
 }
 
 type UserContext = {
