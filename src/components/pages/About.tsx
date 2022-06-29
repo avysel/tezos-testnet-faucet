@@ -39,7 +39,7 @@ function About() {
                                 The faucet definitely needs a better look and feel. If you can help me with that, please contact me.
                             </p>
                             <p>You can also help us by some other way: </p>
-                            <p>- Help us keeping thus faucet running by sending ꜩ to faucet testnets addresses to supply it with new ꜩ.</p>
+                            <p>- Help us keeping this faucet running by sending ꜩ to faucet testnets addresses to supply it with new ꜩ.</p>
                             <p>- Send ꜩ to <b>{Config.application.adminAddress}</b> on mainnet to help us supporting faucet costs.</p>
                         </div>
                     </Col>
