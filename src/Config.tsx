@@ -1,5 +1,5 @@
 import { NetworkType } from "@airgap/beacon-sdk";
-import configData from './config.json';
+import configData from './config-jakartanet.json';
 import { ConfigType } from "./lib/Types";
 
 let Config: ConfigType = configData;
@@ -23,6 +23,6 @@ switch (Config.network.name) {
 
 Config.application.isBeaconWallet = (Config.network.networkType !== undefined);
 
-console.log(Config);
+//console.log(Config);
 
 export default Config;

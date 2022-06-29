@@ -16,6 +16,7 @@ function App() {
 
   useEffect(() => {
     console.log(`Loading ${Config.network.name}`);
+    document.title = Config.application.name;
   }, []);
 
   // Common user data
