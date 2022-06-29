@@ -1,5 +1,5 @@
 import { NetworkType } from "@airgap/beacon-sdk";
-import configData from './config.json';
+import configData from './config-ghostnet.json';
 import { ConfigType } from "./lib/Types";
 
 let Config: ConfigType = configData;

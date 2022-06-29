@@ -4,7 +4,13 @@ import App from "./App";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AppHome from "./AppHome";
 
+/**
+ * Use:
+ * - App to build a faucet
+ * - AppHome to build home page
+ */
+
 ReactDOM.render(
-  <AppHome />,
+  <App />,
   document.getElementById('app')
 );
