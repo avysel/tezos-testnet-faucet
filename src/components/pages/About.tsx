@@ -1,25 +1,19 @@
 import { Container, Row, Col } from "react-bootstrap";
-import Footer from "../Footer";
-import Header from "../Header";
 import '../../App.css';
-import { Link } from "react-router-dom";
 import Config from "../../Config";
 
 function About() {
     return (
         <>
-            <Header />
 
-            <Container className="content">
+            <Container className="content about">
 
                 <Row>
                     <Col>
-                        <Link to="/">
-                            &lt; Back to faucet
-                        </Link>
-                        <h1>About this faucet</h1>
 
-                        <h3>One click faucet</h3>
+                        <h2>About this faucet</h2>
+
+                        <h4>One click faucet</h4>
                         <div>
                             <p><b>One click = one ꜩ</b></p>
                             <p>
@@ -32,14 +26,14 @@ function About() {
                             </p>
                         </div>
 
-                        <h3>Bug, problem or comments ?</h3>
+                        <h4>Bug, problem or comments ?</h4>
                         <div>
                             <p>
                                 Feel free to create an issue on the <a href="https://github.com/avysel/tezos-testnet-faucet/issues" target="_blank">Github project repository</a>.
                             </p>
                         </div>
 
-                        <h3>Want to help ?</h3>
+                        <h4>Want to help ?</h4>
                         <div>
                             <p>
                                 The faucet definitely needs a better look and feel. If you can help me with that, please contact me.
@@ -51,8 +45,6 @@ function About() {
                     </Col>
                 </Row>
             </Container>
-
-            <Footer />
         </>
 
     );

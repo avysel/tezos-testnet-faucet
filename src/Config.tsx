@@ -11,6 +11,9 @@ switch (Config.network.name) {
     case "Ithacanet":
         Config.network.networkType = NetworkType.ITHACANET;
         break;
+    case "Ghostnet":
+        Config.network.networkType = NetworkType.ITHACANET;
+        break;
     case "Jakartanet":
         Config.network.networkType = NetworkType.JAKARTANET;
         break;
